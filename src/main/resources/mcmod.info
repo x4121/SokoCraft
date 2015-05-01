@@ -1,0 +1,21 @@
+[
+{
+  "modid": "SokoBlock",
+  "name": "SokoBlock",
+  "description": "Sokoban for Minecraft",
+  "version": "0.1",
+  "mcversion": "1.7.10",
+  "url": "https://github.com/x4121/SokoBlock",
+  "updateUrl": "",
+  "authorList": [
+    "x4121"
+  ],
+  "credits": "x4121 (Richtherr)",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

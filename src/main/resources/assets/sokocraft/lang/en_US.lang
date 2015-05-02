@@ -1,6 +1,11 @@
 # Key localizations
 
 # Item localizations
-item.sokoCraft:sokoWrench.name=SokoWrench
+item.sokocraft:wrench.name=SokoCraft Wrench
 
 # Block localizations
+tile.sokocraft:crate.name=SokoCraft Crate
+tile.sokocraft:crateDetector.name=SokoCraft CrateDetector
+
+# Creative tabs
+itemGroup.sokocraft=SokoCraft

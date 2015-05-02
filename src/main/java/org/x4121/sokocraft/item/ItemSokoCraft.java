@@ -5,14 +5,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.x4121.sokocraft.creativetab.CreativeTabSokoCraft;
 import org.x4121.sokocraft.reference.Reference;
 
 public class ItemSokoCraft extends Item {
     public ItemSokoCraft() {
         super();
         this.maxStackSize = 1;
-        //this.setCreativeTab(CreativeTab.)
         this.setNoRepair();
+        setCreativeTab(CreativeTabSokoCraft.SOKOCRAFT_TAB);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class ItemSokoCraft extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
-        itemIcon = iconRegister.registerIcon(this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        itemIcon = iconRegister.registerIcon(getUnwrappedUnlocalizedName(getUnlocalizedName()));
     }
 
     protected String getUnwrappedUnlocalizedName(String unlocalizedName) {

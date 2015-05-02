@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import org.x4121.sokocraft.handler.ConfigurationHandler;
+import org.x4121.sokocraft.init.ModBlocks;
 import org.x4121.sokocraft.init.ModItems;
 import org.x4121.sokocraft.proxy.Proxy;
 import org.x4121.sokocraft.reference.Reference;
@@ -25,6 +26,7 @@ public class SokoCraft {
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
         ModItems.init();
+        ModBlocks.init();
     }
 
     @Mod.EventHandler

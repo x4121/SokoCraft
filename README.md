@@ -1,2 +1,2 @@
-# SokoBlock
-Minecraft SokoBlock
+# SokoCraft
+Sokoban for Minecraft

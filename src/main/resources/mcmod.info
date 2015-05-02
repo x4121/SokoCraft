@@ -1,16 +1,16 @@
 [
 {
-  "modid": "SokoBlock",
-  "name": "SokoBlock",
+  "modid": "SokoCraft",
+  "name": "SokoCraft",
   "description": "Sokoban for Minecraft",
   "version": "0.1",
   "mcversion": "1.7.10",
-  "url": "https://github.com/x4121/SokoBlock",
+  "url": "https://github.com/x4121/SokoCraft",
   "updateUrl": "",
   "authorList": [
     "x4121"
   ],
-  "credits": "x4121 (Richtherr)",
+  "credits": "",
   "logoFile": "",
   "screenshots": [
   ],

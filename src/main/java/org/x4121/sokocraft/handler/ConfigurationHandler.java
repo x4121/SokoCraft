@@ -3,12 +3,14 @@ package org.x4121.sokocraft.handler;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
+import org.x4121.sokocraft.reference.Names;
 import org.x4121.sokocraft.reference.Reference;
 
 import java.io.File;
 
 public class ConfigurationHandler {
-    private static boolean configValue = false;
+    private static boolean wrenchRecipeEnabled = true;
+    private static boolean unbreakableBlocks = false;
     public static Configuration configuration;
 
     public static void init(File configFile) {
@@ -20,10 +22,20 @@ public class ConfigurationHandler {
 
     private static void loadConfiguration() {
         configuration.load();
-        configValue = configuration.getBoolean("configValue", Configuration.CATEGORY_GENERAL, true, "Example value");
+        wrenchRecipeEnabled = configuration.getBoolean(Names.Configuration.WRENCH_RECIPE, Names.Configuration.CATEGORY, true, Names.Configuration.WRENCH_RECIPE_DESC);
+        unbreakableBlocks = configuration.getBoolean(Names.Configuration.UNBREAKABLE, Names.Configuration.CATEGORY, false, Names.Configuration.UNBREAKABLE_DESC);
+
         if (configuration.hasChanged()) {
             configuration.save();
         }
+    }
+
+    public static boolean isWrenchRecipeEnabled() {
+        return wrenchRecipeEnabled;
+    }
+
+    public static boolean areBlocksUnbreakable() {
+        return unbreakableBlocks;
     }
 
     @SubscribeEvent

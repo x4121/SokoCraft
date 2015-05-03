@@ -8,7 +8,7 @@ import org.x4121.sokocraft.init.ModBlocks;
 import org.x4121.sokocraft.reference.Reference;
 
 public class CreativeTabSokoCraft {
-    public static final CreativeTabs SOKOCRAFT_TAB = new CreativeTabs(Reference.MOD_ID.toLowerCase()) {
+    public static final CreativeTabs SOKOCRAFT_TAB = new CreativeTabs(Reference.LC_MOD_ID) {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {

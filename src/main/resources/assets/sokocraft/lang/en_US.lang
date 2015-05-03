@@ -1,11 +1,22 @@
 # Key localizations
+keys.sokocraft.category=SokoCraft
+keys.sokocraft.configure=Configure
+keys.sokocraft.push=Push
 
 # Item localizations
-item.sokocraft:wrench.name=SokoCraft Wrench
+item.sokocraft:wrench.name=Wrench
 
 # Block localizations
-tile.sokocraft:crate.name=SokoCraft Crate
-tile.sokocraft:crateDetector.name=SokoCraft CrateDetector
+tile.sokocraft:crate_0.name=Crate
+tile.sokocraft:crate_11.name=Blue Crate
+tile.sokocraft:crate_13.name=Green Crate
+tile.sokocraft:crate_14.name=Red Crate
+tile.sokocraft:crateDetector_0.name=Crate Detector
+tile.sokocraft:crateDetector_11.name=Blue Crate Detector
+tile.sokocraft:crateDetector_13.name=Green Crate Detector
+tile.sokocraft:crateDetector_14.name=Red Crate Detector
+tile.sokocraft:cratePlacer.name=Crate Placer
+tile.sokocraft:crateDispenser.name=Crate Dispenser
 
-# Creative tabs
+# Creative tab localizations
 itemGroup.sokocraft=SokoCraft

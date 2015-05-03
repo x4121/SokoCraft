@@ -4,24 +4,32 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialPortal;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import org.x4121.sokocraft.creativetab.CreativeTabSokoCraft;
+import org.x4121.sokocraft.handler.ConfigurationHandler;
 import org.x4121.sokocraft.reference.Reference;
 
-public class BlockSokoCraft extends Block {
-    public BlockSokoCraft(Material material) {
+
+public abstract class BlockSokoCraft extends Block {
+
+    protected BlockSokoCraft(Material material) {
         super(material);
         setCreativeTab(CreativeTabSokoCraft.SOKOCRAFT_TAB);
+        setResistance(6000000.0F);
+        if (ConfigurationHandler.areBlocksUnbreakable()) {
+            setBlockUnbreakable();
+        } else {
+            this.setHardness(0.5F);
+        }
     }
 
-    public BlockSokoCraft() {
-        this(MaterialPortal.rock);
+    protected BlockSokoCraft() {
+        this(Material.piston);
     }
 
     @Override
     public String getUnlocalizedName() {
-        return String.format("tile.%s%s", Reference.MOD_ID.toLowerCase() + ":", getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
+        return String.format("tile.%s%s", Reference.LC_MOD_ID + ":", getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
     }
 
     @Override

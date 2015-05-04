@@ -19,7 +19,7 @@ public abstract class BlockSokoCraft extends Block {
         if (ConfigurationHandler.areBlocksUnbreakable()) {
             setBlockUnbreakable();
         } else {
-            this.setHardness(0.5F);
+            setHardness(0.5F);
         }
     }
 

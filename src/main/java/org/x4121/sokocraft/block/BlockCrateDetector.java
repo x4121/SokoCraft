@@ -13,10 +13,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.x4121.sokocraft.reference.Colors;
 import org.x4121.sokocraft.reference.Names;
 import org.x4121.sokocraft.reference.Reference;
 import org.x4121.sokocraft.tileentity.TileEntityCrateDetector;
+import org.x4121.sokocraft.util.LogHelper;
 
 import java.util.List;
 
@@ -75,7 +77,17 @@ public class BlockCrateDetector extends BlockContainerSokoCraft {
         return new TileEntityCrateDetector();
     }
 
-    public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity)
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        if (te != null && te instanceof TileEntityCrateDetector) {
+            TileEntityCrateDetector tect = (TileEntityCrateDetector) te;
+            tect.setOrientation(determineOrientation(x, y, z, entity));
+            world.markBlockForUpdate(x, y, z);
+        }
+    }
+
+    public static int determineOrientation(int x, int y, int z, EntityLivingBase entity)
     {
         if (MathHelper.abs((float) entity.posX - (float) x) < 2.0F && MathHelper.abs((float)entity.posZ - (float)z) < 2.0F)
         {

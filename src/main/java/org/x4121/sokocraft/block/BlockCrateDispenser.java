@@ -5,14 +5,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import org.x4121.sokocraft.reference.Names;
 import org.x4121.sokocraft.reference.Reference;
+import org.x4121.sokocraft.util.LogHelper;
 
 public class BlockCrateDispenser extends BlockSokoCraft {
     @SideOnly(Side.CLIENT)
     private IIcon sideIcon;
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
+
+    private boolean hasRedstoneSignal = false;
 
     public BlockCrateDispenser() {
         super();
@@ -36,6 +40,18 @@ public class BlockCrateDispenser extends BlockSokoCraft {
             return blockIcon;
         } else {
             return sideIcon;
+        }
+    }
+
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor) {
+        if (!world.isRemote) {
+            if (world.isBlockIndirectlyGettingPowered(x, y, z) && !hasRedstoneSignal) {
+                hasRedstoneSignal = true;
+                LogHelper.info("plop");
+            } else if (!world.isBlockIndirectlyGettingPowered(x, y, z)) {
+                hasRedstoneSignal = false;
+            }
         }
     }
 }

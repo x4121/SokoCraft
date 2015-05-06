@@ -15,6 +15,7 @@ public final class Names {
 
     public static final class NBT {
         public static final String DIRECTION = "teDirection";
+        public static final String POWERED = "tePowered";
     }
 
     public static final class Helper {

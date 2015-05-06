@@ -39,7 +39,7 @@ public class ItemWrench extends ItemSokoCraft {
         return itemStack;
     }
 
-    @Override
+    /*@Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
         Block block = world.getBlock(x, y, z);
         if (world.isRemote || !(block instanceof BlockSokoCraft)) {
@@ -58,6 +58,24 @@ public class ItemWrench extends ItemSokoCraft {
                 break;
         }
         return false;
+    }*/
+
+    /*@SubscribeEvent
+    public void leftClick(PlayerInteractEvent event){
+        if(event.action != PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) return;
+        if(event.entityPlayer.getHeldItem() == null || event.entityPlayer.getHeldItem().getItem() != this) return;
+        if(!event.world.isRemote){
+            TileEntity tileEntity = event.world.getTileEntity(event.x, event.y, event.z);
+            if(tileEntity instanceof IMover){
+                MoverEventHandler.registerMover((IMover) tileEntity);
+            }
+        }
+        event.setCanceled(true);
+    }*/
+
+    @Override
+    public float getDigSpeed(ItemStack itemStack, Block block, int metadata) {
+        return 0;
     }
 
     @Override
@@ -65,6 +83,11 @@ public class ItemWrench extends ItemSokoCraft {
     @SuppressWarnings("unchecked")
     public void addInformation(ItemStack itemStack, EntityPlayer player, List info, boolean useExtraInfo) {
         info.add(getModeString(itemStack.getItemDamage()));
+    }
+
+    @Override
+    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
+        return true;
     }
 
     private Mode getMode(int dmg) {

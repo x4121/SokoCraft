@@ -26,6 +26,15 @@ public enum Colors {
         return codes;
     }
 
+    public static Colors getColor(int code) {
+        for (Colors color: Colors.values()) {
+            if (color.getCode() == code) {
+                return color;
+            }
+        }
+        return null;
+    }
+
     public int getCode() {
         return code;
     }

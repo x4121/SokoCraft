@@ -15,63 +15,46 @@ buildscript {
     }
 }
 
-repositories {
-    maven {
-        name "ChickenBones"
-        url = "http://chickenbones.net/maven/"
-    }
-    maven {
-        name = "MobiusStrip"
-        url = "http://mobiusstrip.eu/maven"
-    }
-}
-
+apply plugin: 'java'
 apply plugin: 'forge'
 
-version = "1.7.10-0.1"
 group= "org.x4121.sokocraft"
 archivesBaseName = "SokoCraft"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
 minecraft {
-    version = "1.7.10-10.13.3.1400-1.7.10"
-    runDir = "run/assets"
+    runDir = "run"
+
+    version = config.minecraft_version + "-" + config.forge_version
+
+    replaceIn "reference/Reference.java"
+    replace "@VERSION@", "${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
+    if (project.hasProperty("sokocraft_sha1_signature")) {
+        replace "@FINGERPRINT@", project.sokocraft_sha1_signature
+    }
 }
 
-dependencies {
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.3.136:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.6.43:dev"
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.4.106:dev"
-    compile "mcp.mobius.waila:Waila:1.5.10_1.7.10:dev"
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-}
+version = "${config.minecraft_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
 
 processResources
 {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'mod_version':project.version, 'minecraft_version':project.config.minecraft.version
     }
         
     // copy everything else, thats not the mcmod.info

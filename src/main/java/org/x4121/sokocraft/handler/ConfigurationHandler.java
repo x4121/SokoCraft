@@ -11,6 +11,7 @@ import java.io.File;
 public class ConfigurationHandler {
     private static boolean wrenchRecipeEnabled = true;
     private static boolean unbreakableBlocks = false;
+    private static int cratePushRange = 64;
     public static Configuration configuration;
 
     public static void init(File configFile) {
@@ -24,6 +25,7 @@ public class ConfigurationHandler {
         configuration.load();
         wrenchRecipeEnabled = configuration.getBoolean(Names.Configuration.WRENCH_RECIPE, Names.Configuration.CATEGORY, true, Names.Configuration.WRENCH_RECIPE_DESC);
         unbreakableBlocks = configuration.getBoolean(Names.Configuration.UNBREAKABLE, Names.Configuration.CATEGORY, false, Names.Configuration.UNBREAKABLE_DESC);
+        cratePushRange = configuration.getInt(Names.Configuration.CRATE_RANGE, Names.Configuration.CATEGORY, 64, 1, 64, Names.Configuration.CRATE_RANGE_DESC);
 
         if (configuration.hasChanged()) {
             configuration.save();
@@ -36,6 +38,10 @@ public class ConfigurationHandler {
 
     public static boolean areBlocksUnbreakable() {
         return unbreakableBlocks;
+    }
+
+    public static int getCratePushRange() {
+        return cratePushRange;
     }
 
     @SubscribeEvent

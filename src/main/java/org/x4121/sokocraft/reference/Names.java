@@ -35,5 +35,7 @@ public final class Names {
         public static final String WRENCH_RECIPE_DESC = "Make the SokoCraft wrench craftable";
         public static final String UNBREAKABLE = "unbreakableBlocks";
         public static final String UNBREAKABLE_DESC = "All SokoCraft blocks are unbreakable";
+        public static final String CRATE_RANGE = "cratePushRange";
+        public static final String CRATE_RANGE_DESC = "Maximum distance a crate slides on its own";
     }
 }

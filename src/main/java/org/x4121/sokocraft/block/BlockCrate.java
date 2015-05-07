@@ -1,5 +1,6 @@
 package org.x4121.sokocraft.block;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.x4121.sokocraft.handler.ConfigurationHandler;
 import org.x4121.sokocraft.init.ModBlocks;
 import org.x4121.sokocraft.reference.Colors;
 import org.x4121.sokocraft.reference.Names;
@@ -71,12 +73,33 @@ public class BlockCrate extends BlockSokoCraft {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float dX, float dY, float dZ)
     {
-        if (world.isRemote) return false;
+        if (world.isRemote || player.getCurrentEquippedItem() != null) return false;
         ForgeDirection moveDir = ForgeDirection.getOrientation(side).getOpposite();
         if (canMove(world, x, y, z, moveDir)) {
             move(world, x, y, z, moveDir);
             return true;
         } else return false;
+    }
+
+    @Override
+    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+        if (world.isRemote || player.getCurrentEquippedItem() != null) return;
+        double dX = x - player.posX + 0.5;
+        double dY = y - player.posY + 0.5;
+        double dZ = z - player.posZ + 0.5;
+        ForgeDirection moveDir = getFarthestDirection(dX, dY, dZ).getOpposite();
+        boolean blocked = !canMove(world, x, y, z, moveDir);
+        int remainingMoves = ConfigurationHandler.getCratePushRange();
+        LogHelper.info(blocked + " " + remainingMoves);
+        while (remainingMoves > 0 && !blocked) {
+            move(world, x, y, z, moveDir);
+            remainingMoves--;
+            x = nextX(x, moveDir);
+            y = nextY(y, moveDir);
+            z = nextZ(z, moveDir);
+            blocked = !canMove(world, x, y, z, moveDir);
+            LogHelper.info(blocked + " " + remainingMoves);
+        }
     }
 
     private boolean canMove(World world, int x, int y, int z, ForgeDirection direction) {
@@ -131,6 +154,63 @@ public class BlockCrate extends BlockSokoCraft {
                 world.setBlock(x - 1, y, z, this);
                 //world.notifyBlocksOfNeighborChange(x - 1, y, z, this);
                 world.setBlockMetadataWithNotify(x - 1, y, z, oldMeta, 3);
+        }
+    }
+
+    private ForgeDirection getFarthestDirection(double dX, double dY, double dZ) {
+        double absX = Math.abs(dX);
+        double absY = Math.abs(dY);
+        double absZ = Math.abs(dZ);
+        double max = Math.max(absX, Math.max(absY, absZ));
+
+        if (max == absX) {
+            if (dX > 0) {
+                return ForgeDirection.WEST;
+            } else {
+                return ForgeDirection.EAST;
+            }
+        } else if (max == absY) {
+            if (dY > 0) {
+                return ForgeDirection.DOWN;
+            } else {
+                return ForgeDirection.UP;
+            }
+        } else {
+            if (dZ > 0) {
+                return ForgeDirection.NORTH;
+            } else {
+                return ForgeDirection.SOUTH;
+            }
+        }
+    }
+
+    private int nextX(int x, ForgeDirection moveDir) {
+        if (moveDir == ForgeDirection.EAST) {
+            return x + 1;
+        } else if (moveDir == ForgeDirection.WEST) {
+            return x - 1;
+        } else {
+            return x;
+        }
+    }
+
+    private int nextY(int y, ForgeDirection moveDir) {
+        if (moveDir == ForgeDirection.UP) {
+            return y + 1;
+        } else if (moveDir == ForgeDirection.DOWN) {
+            return y -1;
+        } else {
+            return y;
+        }
+    }
+
+    private int nextZ(int z, ForgeDirection moveDir) {
+        if (moveDir == ForgeDirection.SOUTH) {
+            return z + 1;
+        } else if (moveDir == ForgeDirection.NORTH) {
+            return z - 1;
+        } else {
+            return z;
         }
     }
 }

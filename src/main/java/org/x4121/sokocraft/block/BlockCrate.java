@@ -88,17 +88,13 @@ public class BlockCrate extends BlockSokoCraft {
         double dY = y - player.posY + 0.5;
         double dZ = z - player.posZ + 0.5;
         ForgeDirection moveDir = getFarthestDirection(dX, dY, dZ).getOpposite();
-        boolean blocked = !canMove(world, x, y, z, moveDir);
         int remainingMoves = ConfigurationHandler.getCratePushRange();
-        LogHelper.info(blocked + " " + remainingMoves);
-        while (remainingMoves > 0 && !blocked) {
+        while (remainingMoves > 0 && canMove(world, x, y, z, moveDir)) {
             move(world, x, y, z, moveDir);
             remainingMoves--;
             x = nextX(x, moveDir);
             y = nextY(y, moveDir);
             z = nextZ(z, moveDir);
-            blocked = !canMove(world, x, y, z, moveDir);
-            LogHelper.info(blocked + " " + remainingMoves);
         }
     }
 
